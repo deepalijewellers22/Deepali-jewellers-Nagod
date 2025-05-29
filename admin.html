@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Panel - Deepali Jewellers</title>
+  <meta charset="UTF-8" />
+  <style>
+    body {
+      font-family: Arial;
+      padding: 30px;
+      background-color: #fffbea;
+    }
+    .login, .panel {
+      max-width: 400px;
+      margin: auto;
+      padding: 25px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background: white;
+      box-shadow: 0 0 10px #99999955;
+    }
+    h2 {
+      text-align: center;
+      color: #b8860b;
+    }
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    .hide {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login" id="loginBox">
+    <h2>🔒 Admin Login</h2>
+    <input type="text" id="mobile" placeholder="Mobile Number" />
+    <input type="password" id="password" placeholder="Password" />
+    <button onclick="login()">Login</button>
+    <p id="errorMsg" style="color:red;"></p>
+  </div>
+
+  <div class="panel hide" id="adminPanel">
+    <h2>💼 Update Rates</h2>
+    <input type="number" id="goldRate" placeholder="Gold Rate ₹" />
+    <input type="number" id="silverRate" placeholder="Silver Rate ₹" />
+    <button onclick="updateRates()">✅ Update Rates</button>
+    <p id="updateMsg" style="color:green;"></p>
+  </div>
+
+  <script type="module">
+    // Firebase import
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDIMBm0tBzuWXNTQCyG3va644q1Zfl7xjs",
+      authDomain: "deepali-jewellers-a4fbb.firebaseapp.com",
+      databaseURL: "https://deepali-jewellers-a4fbb-default-rtdb.firebaseio.com",
+      projectId: "deepali-jewellers-a4fbb",
+      storageBucket: "deepali-jewellers-a4fbb.appspot.com",
+      messagingSenderId: "849099656045",
+      appId: "1:849099656045:web:0957e3e2d33c382a6a2864"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // Login System
+    const mobileInput = document.getElementById("mobile");
+    const passwordInput = document.getElementById("password");
+    const errorMsg = document.getElementById("errorMsg");
+    const loginBox = document.getElementById("loginBox");
+    const adminPanel = document.getElementById("adminPanel");
+
+    function login() {
+      const mobile = mobileInput.value;
+      const password = passwordInput.value;
+
+      if (mobile === "9713321930" && password === "alok@1457") {
+        loginBox.classList.add("hide");
+        adminPanel.classList.remove("hide");
+      } else {
+        errorMsg.textContent = "❌ गलत मोबाइल नंबर या पासवर्ड";
+      }
+    }
+
+    // Update Firebase Rates
+    function updateRates() {
+      const gold = document.getElementById("goldRate").value;
+      const silver = document.getElementById("silverRate").value;
+
+      if (gold && silver) {
+        set(ref(db, "rates"), {
+          gold: Number(gold),
+          silver: Number(silver)
+        }).then(() => {
+          document.getElementById("updateMsg").textContent = "✅ रेट सफलतापूर्वक अपडेट हो गए!";
+        }).catch(() => {
+          document.getElementById("updateMsg").textContent = "❌ अपडेट करते समय त्रुटि हुई।";
+        });
+      }
+    }
+  </script>
+
+</body>
+</html>
