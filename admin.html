@@ -1,61 +1,57 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Admin Panel - Deepali Jewellers</title>
-  <meta charset="UTF-8" />
+  <title>Admin Login - Deepali Jewellers</title>
   <style>
     body {
-      font-family: Arial;
-      padding: 30px;
-      background-color: #fffbea;
-    }
-    .login, .panel {
-      max-width: 400px;
-      margin: auto;
-      padding: 25px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      background: white;
-      box-shadow: 0 0 10px #99999955;
-    }
-    h2 {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
       text-align: center;
-      color: #b8860b;
+      padding: 50px;
     }
-    input, button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 10px;
-      font-size: 16px;
+    #login-box {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      display: inline-block;
+      box-shadow: 0px 0px 10px gray;
     }
-    .hide {
-      display: none;
+    input {
+      padding: 10px;
+      margin: 10px;
+      width: 80%;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 10px 20px;
+      background: #008cba;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #status {
+      margin-top: 15px;
+      color: red;
     }
   </style>
 </head>
 <body>
-
-  <div class="login" id="loginBox">
-    <h2>🔒 Admin Login</h2>
-    <input type="text" id="mobile" placeholder="Mobile Number" />
-    <input type="password" id="password" placeholder="Password" />
+  <div id="login-box">
+    <h2>Admin Login</h2>
+    <input type="text" id="mobile" placeholder="Mobile Number"><br>
+    <input type="password" id="password" placeholder="Password"><br>
     <button onclick="login()">Login</button>
-    <p id="errorMsg" style="color:red;"></p>
-  </div>
-
-  <div class="panel hide" id="adminPanel">
-    <h2>💼 Update Rates</h2>
-    <input type="number" id="goldRate" placeholder="Gold Rate ₹" />
-    <input type="number" id="silverRate" placeholder="Silver Rate ₹" />
-    <button onclick="updateRates()">✅ Update Rates</button>
-    <p id="updateMsg" style="color:green;"></p>
+    <div id="status"></div>
   </div>
 
   <script type="module">
-    // Firebase import
+    // Firebase Import
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
     import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-database.js";
 
+    // Firebase Config
     const firebaseConfig = {
       apiKey: "AIzaSyDIMBm0tBzuWXNTQCyG3va644q1Zfl7xjs",
       authDomain: "deepali-jewellers-a4fbb.firebaseapp.com",
@@ -69,42 +65,23 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    // Login System
-    const mobileInput = document.getElementById("mobile");
-    const passwordInput = document.getElementById("password");
-    const errorMsg = document.getElementById("errorMsg");
-    const loginBox = document.getElementById("loginBox");
-    const adminPanel = document.getElementById("adminPanel");
-
-    function login() {
-      const mobile = mobileInput.value;
-      const password = passwordInput.value;
+    // Login Function
+    window.login = function () {
+      const mobile = document.getElementById("mobile").value;
+      const password = document.getElementById("password").value;
+      const status = document.getElementById("status");
 
       if (mobile === "9713321930" && password === "alok@1457") {
-        loginBox.classList.add("hide");
-        adminPanel.classList.remove("hide");
+        status.style.color = "green";
+        status.innerText = "Login Successful! Redirecting...";
+        setTimeout(() => {
+          window.location.href = "admin-panel.html"; // Panel page create करना होगा
+        }, 1500);
       } else {
-        errorMsg.textContent = "❌ गलत मोबाइल नंबर या पासवर्ड";
+        status.style.color = "red";
+        status.innerText = "गलत मोबाइल नंबर या पासवर्ड!";
       }
-    }
-
-    // Update Firebase Rates
-    function updateRates() {
-      const gold = document.getElementById("goldRate").value;
-      const silver = document.getElementById("silverRate").value;
-
-      if (gold && silver) {
-        set(ref(db, "rates"), {
-          gold: Number(gold),
-          silver: Number(silver)
-        }).then(() => {
-          document.getElementById("updateMsg").textContent = "✅ रेट सफलतापूर्वक अपडेट हो गए!";
-        }).catch(() => {
-          document.getElementById("updateMsg").textContent = "❌ अपडेट करते समय त्रुटि हुई।";
-        });
-      }
-    }
+    };
   </script>
-
 </body>
 </html>
