@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Panel - Deepali Jewellers</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f3f3;
+      padding: 30px;
+    }
+    h2 {
+      color: #444;
+      text-align: center;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 10px;
+    }
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      font-size: 16px;
+    }
+    button {
+      background: #d4af37;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>रेट अपडेट करें</h2>
+
+    <label>सोने का रेट (₹/ग्राम)</label>
+    <input type="number" id="goldRate" placeholder="उदाहरण: 6100">
+
+    <label>चाँदी का रेट (₹/ग्राम)</label>
+    <input type="number" id="silverRate" placeholder="उदाहरण: 75">
+
+    <button onclick="updateRates()">रेट अपडेट करें</button>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDIMBm0tBzuWXNTQCyG3va644q1Zfl7xjs",
+      authDomain: "deepali-jewellers-a4fbb.firebaseapp.com",
+      databaseURL: "https://deepali-jewellers-a4fbb-default-rtdb.firebaseio.com",
+      projectId: "deepali-jewellers-a4fbb",
+      storageBucket: "deepali-jewellers-a4fbb.appspot.com",
+      messagingSenderId: "849099656045",
+      appId: "1:849099656045:web:0957e3e2d33c382a6a2864",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    function updateRates() {
+      const gold = document.getElementById("goldRate").value;
+      const silver = document.getElementById("silverRate").value;
+
+      set(ref(db, "rates/"), {
+        gold: gold,
+        silver: silver
+      }).then(() => {
+        alert("रेट सफलतापूर्वक अपडेट हो गया!");
+      }).catch((error) => {
+        alert("Error: " + error);
+      });
+    }
+
+    window.updateRates = updateRates;
+  </script>
+
+</body>
+</html>
