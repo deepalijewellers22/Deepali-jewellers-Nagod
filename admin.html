@@ -1,87 +1,76 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Admin Login - Deepali Jewellers</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f0f0f0;
-      text-align: center;
-      padding: 50px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url('https://images.unsplash.com/photo-1587300003388-59208cc962cb') no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      padding: 0;
     }
-    #login-box {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      display: inline-block;
-      box-shadow: 0px 0px 10px gray;
+    .container {
+      max-width: 400px;
+      margin: 100px auto;
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+    h2 {
+      margin-bottom: 20px;
+      color: #222;
     }
     input {
-      padding: 10px;
-      margin: 10px;
-      width: 80%;
-      border-radius: 5px;
-      border: 1px solid #ccc;
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #aaa;
+      border-radius: 8px;
     }
     button {
-      padding: 10px 20px;
-      background: #008cba;
+      width: 100%;
+      padding: 12px;
+      background-color: #d4af37;
       color: white;
+      font-weight: bold;
       border: none;
-      border-radius: 5px;
+      border-radius: 8px;
       cursor: pointer;
     }
-    #status {
-      margin-top: 15px;
+    button:hover {
+      background-color: #b18b2b;
+    }
+    .error {
       color: red;
+      font-size: 14px;
     }
   </style>
 </head>
 <body>
-  <div id="login-box">
+
+  <div class="container">
     <h2>Admin Login</h2>
-    <input type="text" id="mobile" placeholder="Mobile Number"><br>
-    <input type="password" id="password" placeholder="Password"><br>
+    <input type="text" id="mobileInput" placeholder="मोबाइल नंबर दर्ज करें"/>
     <button onclick="login()">Login</button>
-    <div id="status"></div>
+    <p id="error" class="error"></p>
   </div>
 
-  <script type="module">
-    // Firebase Import
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
-    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-database.js";
+  <script>
+    function login() {
+      const mobile = document.getElementById('mobileInput').value;
+      const correctMobile = "9713321930";
 
-    // Firebase Config
-    const firebaseConfig = {
-      apiKey: "AIzaSyDIMBm0tBzuWXNTQCyG3va644q1Zfl7xjs",
-      authDomain: "deepali-jewellers-a4fbb.firebaseapp.com",
-      databaseURL: "https://deepali-jewellers-a4fbb-default-rtdb.firebaseio.com",
-      projectId: "deepali-jewellers-a4fbb",
-      storageBucket: "deepali-jewellers-a4fbb.appspot.com",
-      messagingSenderId: "849099656045",
-      appId: "1:849099656045:web:0957e3e2d33c382a6a2864"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-
-    // Login Function
-    window.login = function () {
-      const mobile = document.getElementById("mobile").value;
-      const password = document.getElementById("password").value;
-      const status = document.getElementById("status");
-
-      if (mobile === "9713321930" && password === "alok@1457") {
-        status.style.color = "green";
-        status.innerText = "Login Successful! Redirecting...";
-        setTimeout(() => {
-          window.location.href = "admin-panel.html"; // Panel page create करना होगा
-        }, 1500);
+      if (mobile === correctMobile) {
+        window.location.href = "admin-panel.html";
       } else {
-        status.style.color = "red";
-        status.innerText = "गलत मोबाइल नंबर या पासवर्ड!";
+        document.getElementById('error').innerText = "गलत मोबाइल नंबर!";
       }
-    };
+    }
   </script>
 </body>
 </html>
