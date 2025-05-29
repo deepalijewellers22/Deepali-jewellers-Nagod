@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Admin Login - Deepali Jewellers</title>
+  <title>Admin - Deepali Jewellers</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -14,7 +14,7 @@
     }
     .container {
       max-width: 400px;
-      margin: 100px auto;
+      margin: 120px auto;
       background-color: rgba(255, 255, 255, 0.95);
       padding: 30px;
       border-radius: 15px;
@@ -25,18 +25,12 @@
       margin-bottom: 20px;
       color: #222;
     }
-    input {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border: 1px solid #aaa;
-      border-radius: 8px;
-    }
     button {
       width: 100%;
-      padding: 12px;
+      padding: 14px;
       background-color: #d4af37;
       color: white;
+      font-size: 16px;
       font-weight: bold;
       border: none;
       border-radius: 8px;
@@ -45,31 +39,18 @@
     button:hover {
       background-color: #b18b2b;
     }
-    .error {
-      color: red;
-      font-size: 14px;
-    }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <h2>Admin Login</h2>
-    <input type="text" id="mobileInput" placeholder="मोबाइल नंबर दर्ज करें"/>
-    <button onclick="login()">Login</button>
-    <p id="error" class="error"></p>
+    <h2>Admin Panel खोलें</h2>
+    <button onclick="goToPanel()">Admin Panel</button>
   </div>
 
   <script>
-    function login() {
-      const mobile = document.getElementById('mobileInput').value;
-      const correctMobile = "9713321930";
-
-      if (mobile === correctMobile) {
-        window.location.href = "admin-panel.html";
-      } else {
-        document.getElementById('error').innerText = "गलत मोबाइल नंबर!";
-      }
+    function goToPanel() {
+      window.location.href = "admin-panel.html";
     }
   </script>
 </body>
